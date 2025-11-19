@@ -1,2 +1,1 @@
-# comment-auto-bot
-A repository to test GitHub automation for adding comments to issues
+IyBBdXRvbWF0ZWQgQ29tbWVudCBCb3QKCkEgcmVwb3NpdG9yeSB0byB0ZXN0IEdpdEh1YiBhdXRvbWF0aW9uIGZvciBhZGRpbmcgY29tbWVudHMgdG8gaXNzdWVzLg==
