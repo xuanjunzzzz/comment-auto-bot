@@ -1,0 +1,41 @@
+name: Comment Bot
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  comment-on-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Add comment based on label
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue } = context.payload;
+            
+            // Check if issue has labels
+            const hasBugLabel = issue.labels.some(label => label.name === 'bug');
+            const hasFeatureLabel = issue.labels.some(label => label.name === 'feature');
+            
+            let commentMessage;
+            
+            if (hasBugLabel) {
+              commentMessage = 'Thank you. We will fix it';
+            } else if (hasFeatureLabel) {
+              commentMessage = 'Thank you, we will consider to include this feature.';
+            } else {
+              commentMessage = 'Thank you for your contribution!';
+            }
+            
+            // Add comment to the issue
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: commentMessage
+            });
